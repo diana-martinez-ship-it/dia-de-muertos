@@ -1,0 +1,6 @@
+{
+  "name": "Día de Muertos",
+  "description": "Una celebración mexicana para recordar y honrar a nuestros seres queridos. Tradición, ofrenda interactiva, historia y música.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

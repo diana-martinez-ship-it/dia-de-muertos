@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="220" height="150" viewBox="0 0 220 150">
+<circle cx="110" cy="75" r="66" fill="none" stroke="#0E9C9C" stroke-width="6" stroke-dasharray="10 6"/>
+<circle cx="110" cy="75" r="54" fill="#0E9C9C" stroke="#2A0F14" stroke-width="4"/>
+<circle cx="110" cy="58" r="12" fill="#FFC21A"/><circle cx="98" cy="68" r="12" fill="#FFC21A"/><circle cx="122" cy="68" r="12" fill="#FFC21A"/><circle cx="110" cy="76" r="12" fill="#FFC21A"/>
+<circle cx="110" cy="67" r="6" fill="#B8420F"/>
+<text x="110" y="112" text-anchor="middle" font-family="Abril Fatface" font-size="20" fill="#FFF1DC">2008</text>
+</svg>

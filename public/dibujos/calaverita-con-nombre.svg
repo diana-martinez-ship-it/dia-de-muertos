@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="140" height="140" viewBox="0 0 130 130">
+<ellipse cx="65" cy="58" rx="52" ry="50" fill="#FFFFFF"/>
+<rect x="34" y="78" width="62" height="42" rx="18" fill="#FFFFFF"/>
+<rect id="cinta-nombre" x="34" y="18" width="62" height="20" rx="10" fill="#0E9C9C"/>
+<text x="65" y="33" text-anchor="middle" font-family="Caveat" font-size="17" font-weight="600" fill="#FFFFFF">Diana</text>
+<circle cx="45" cy="60" r="15" fill="#E4007C"/><circle cx="85" cy="60" r="15" fill="#E4007C"/>
+<circle cx="45" cy="60" r="6" fill="#0E9C9C"/><circle cx="85" cy="60" r="6" fill="#0E9C9C"/>
+<path d="M65 76 L59 88 Q65 92 71 88 Z" fill="#0E9C9C"/>
+<path d="M42 104 Q65 114 88 104" stroke="#0E9C9C" stroke-width="4" fill="none" stroke-dasharray="3 6" stroke-linecap="round"/>
+<circle cx="20" cy="72" r="5" fill="#E4007C"/><circle cx="110" cy="72" r="5" fill="#E4007C"/>
+</svg>

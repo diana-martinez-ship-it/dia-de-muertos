@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="112" height="88" viewBox="0 0 56 44">
+<g id="ala-izq"><path d="M28 22 C20 4 4 0 2 10 C0 20 14 22 28 22 Z M28 22 C18 26 6 34 12 42 C18 46 26 34 28 22 Z" fill="#FFC21A" stroke="#2A0F14" stroke-width="2.5"/></g>
+<g id="ala-der"><path d="M28 22 C36 4 52 0 54 10 C56 20 42 22 28 22 Z M28 22 C38 26 50 34 44 42 C38 46 30 34 28 22 Z" fill="#FFC21A" stroke="#2A0F14" stroke-width="2.5"/></g>
+<rect x="26.5" y="12" width="3" height="22" rx="1.5" fill="#2A0F14"/>
+</svg>

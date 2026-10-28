@@ -1,0 +1,777 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Día de Muertos</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Abril+Fatface&amp;family=Nunito+Sans:wght@400;600;800&amp;family=Caveat:wght@600&amp;display=swap">
+<style>
+body{margin:0;background:#F5821F}
+a{color:#2A0F14}a:hover{color:#E4007C}
+h1,h2,h3{text-wrap:balance}
+button:focus-visible,a:focus-visible{outline:3px solid #0E9C9C;outline-offset:3px}
+svg *{transform-box:fill-box}
+
+@keyframes sway{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(5deg)}}
+@keyframes fall{0%{transform:translateY(-60px) rotate(0deg);opacity:0}10%{opacity:1}90%{opacity:1}100%{transform:translateY(980px) rotate(540deg);opacity:0}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+@keyframes flutter{0%,100%{transform:scaleX(1)}50%{transform:scaleX(0.25)}}
+@keyframes flightA{0%{transform:translate(0,0)}25%{transform:translate(-450px,-70px)}50%{transform:translate(-900px,30px)}75%{transform:translate(-1350px,-50px)}100%{transform:translate(-1800px,0)}}
+@keyframes flame{0%,100%{transform:scaleY(1) scaleX(1)}50%{transform:scaleY(0.78) scaleX(1.1)}}
+@keyframes smoke{0%{transform:translateY(0) scale(0.6);opacity:0.7}100%{transform:translateY(-90px) scale(1.7);opacity:0}}
+@keyframes strum{0%,100%{transform:rotate(0deg)}50%{transform:rotate(-16deg)}}
+@keyframes nod{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(5deg)}}
+@keyframes note{0%{transform:translate(0,0);opacity:0}20%{opacity:1}100%{transform:translate(40px,-170px);opacity:0}}
+@keyframes rise{from{transform:translateY(36px);opacity:0}to{transform:none;opacity:1}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes twinkle{0%,100%{opacity:1}50%{opacity:0.2}}
+@keyframes flicker{0%,100%{opacity:1}40%{opacity:0.6}45%{opacity:1}70%{opacity:0.8}}
+.twinkle{animation:twinkle 2.4s ease-in-out infinite}
+@keyframes kenburns{0%{transform:scale(1.04)}100%{transform:scale(1.14) translateX(-2%)}}
+.kenburns{animation:kenburns 26s ease-in-out infinite alternate}
+@keyframes ember{0%{transform:translateY(0);opacity:0}15%{opacity:1}100%{transform:translateY(-320px) translateX(30px);opacity:0}}
+.ember{animation:ember linear infinite}
+@keyframes candleglow{0%,100%{opacity:0.75;transform:scale(1)}50%{opacity:1;transform:scale(1.15)}}
+.candleglow{animation:candleglow 1.8s ease-in-out infinite}
+.flicker{animation:flicker 2.2s steps(1) infinite}
+@keyframes spinback{to{transform:rotate(-360deg)}}
+
+.flag{animation:sway 3.2s ease-in-out infinite;transform-origin:50% 0}
+.petal{animation:fall linear infinite}
+.bob{animation:bob 3.4s ease-in-out infinite}
+.wing{animation:flutter .3s ease-in-out infinite;transform-origin:50% 50%}
+.flightA{animation:flightA 22s linear infinite}
+.flightB{animation:flightA 30s linear infinite;animation-delay:-11s}
+.flame{animation:flame .9s ease-in-out infinite;transform-origin:50% 100%}
+.smoke{animation:smoke 3s ease-out infinite}
+.strum{animation:strum .5s ease-in-out infinite;transform-origin:50% 0%}
+.nod{animation:nod 1s ease-in-out infinite;transform-origin:50% 100%}
+.note{animation:note 3s ease-out infinite}
+.rise{animation:rise .9s cubic-bezier(.2,.7,.2,1) both}
+.rise2{animation:rise .9s .15s cubic-bezier(.2,.7,.2,1) both}
+.rise3{animation:rise .9s .3s cubic-bezier(.2,.7,.2,1) both}
+.spin{animation:spin 40s linear infinite;transform-origin:50% 50%}
+.spinback{animation:spinback 30s linear infinite;transform-origin:50% 50%}
+
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,194,26,0.85)}100%{box-shadow:0 0 0 22px rgba(255,194,26,0)}}
+.fold{transition:transform .6s cubic-bezier(.3,1.3,.5,1)}
+.fold-a{transform:rotateY(14deg)}
+.fold-b{transform:rotateY(-14deg)}
+.codex:hover .fold{transform:rotateY(0deg)}
+.cal{transition:transform .35s cubic-bezier(.3,1.6,.5,1)}
+.cal:hover{transform:rotate(0deg) translateY(-10px) !important}
+@media (max-width: 860px){
+  .codex-row{grid-template-columns:1fr !important}
+  .fold{transform:none !important}
+}
+@keyframes eq{0%,100%{transform:scaleY(0.3)}50%{transform:scaleY(1)}}
+.eq{animation:eq .7s ease-in-out infinite;transform-origin:50% 100%}
+.hotspot{transition:transform .2s cubic-bezier(.3,1.6,.5,1)}
+.hotspot:hover{transform:scale(1.18)}
+.pulse{animation:pulse 1.4s ease-out infinite;transform:scale(1.2)}
+.chip{transition:transform .2s,background .2s,color .2s;cursor:pointer}
+.chip:hover{transform:translateY(-3px)}
+.skull{transition:transform .35s cubic-bezier(.3,1.6,.5,1)}
+.skull:hover{transform:rotate(-8deg) scale(1.1)}
+.veladora{transition:transform .35s cubic-bezier(.3,1.6,.5,1)}
+.veladora:hover{transform:translateY(-12px)}
+.glow{transition:opacity .4s,transform .4s}
+.veladora:hover .glow{opacity:.7 !important;transform:scale(1.3)}
+.loteria{transition:transform .4s cubic-bezier(.3,1.6,.5,1)}
+.loteria:hover{transform:rotate(0deg) scale(1.04) !important}
+@keyframes hang{0%,100%{transform:rotate(-1.5deg)}50%{transform:rotate(1.5deg)}}
+.hang{animation:hang 4.5s ease-in-out infinite;transform-origin:50% 0}
+.hang:hover{animation-play-state:paused}
+.polaroid{transition:transform .4s cubic-bezier(.3,1.6,.5,1),box-shadow .4s}
+.hang:hover .polaroid{transform:rotate(0deg) scale(1.06) !important;box-shadow:0 2px 0 rgba(42,15,20,0.06),0 28px 50px rgba(42,15,20,0.28) !important}
+.btn{transition:transform .2s}
+.btn:hover{transform:scale(1.05)}
+
+@media (max-width: 860px){
+  .hero-title{font-size:66px !important}
+  .sec-title{font-size:44px !important}
+  .pad{padding-left:20px !important;padding-right:20px !important}
+  .hide-sm{display:none !important}
+}
+@media (prefers-reduced-motion: reduce){
+  *{animation:none !important;transition:none !important}
+}
+</style>
+</helmet>
+<div style="font-family: 'Nunito Sans', 'Helvetica Neue', sans-serif; color: #2A0F14; background: #F5821F; min-height: 100%">
+
+  <!-- ================= PORTADA CON FOTO DE FONDO ================= -->
+  <div style="position: relative; overflow: hidden; background: #2A0F14">
+  <img src="fotos/1-portada-panteon-noche.jpg" alt="" aria-hidden="true" class="kenburns" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 60%">
+  <div aria-hidden="true" style="position: absolute; inset: 0; background: linear-gradient(90deg, rgba(42,15,20,0.92) 0%, rgba(42,15,20,0.7) 38%, rgba(42,15,20,0.25) 70%, rgba(42,15,20,0.35) 100%)"></div>
+  <div aria-hidden="true" style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(42,15,20,0.55) 0%, rgba(42,15,20,0) 30%, rgba(42,15,20,0) 70%, #2A0F14 100%)"></div>
+  <div aria-hidden="true" style="position: absolute; inset: 0; background: #F5821F; mix-blend-mode: soft-light; opacity: 0.55"></div>
+
+  <!-- ================= PAPEL PICADO ================= -->
+  <div aria-hidden="true" style="position: relative; height: 128px; overflow: hidden">
+    <svg width="1440" height="40" viewBox="0 0 1440 40" preserveAspectRatio="none" style="position: absolute; top: 0; left: 0; width: 100%"><path d="M0 14 Q360 30 720 14 T1440 14" stroke="#FFF1DC" stroke-width="2" fill="none"></path></svg>
+    <div style="display: flex; gap: 8px; padding: 16px 8px 0; width: max-content">
+      <sc-for list="{{flags}}" as="f" hint-placeholder-count="22">
+        <img class="flag" src="{{f.src}}" alt="" width="132" height="100" style="display: block; flex: none; width: 132px; height: 100px; animation-delay: {{f.delay}}s; filter: drop-shadow(0 6px 6px rgba(0,0,0,0.35))">
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- ================= MENÚ ================= -->
+  <header class="pad" style="position: relative; z-index: 3; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; padding: 4px 80px 20px">
+    <a href="#inicio" style="display: inline-flex; align-items: center; gap: 10px; font-family: 'Abril Fatface', serif; font-size: 28px; color: #FFF1DC; text-decoration: none">
+      <svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="10" r="7" fill="#FFC21A"></circle><circle cx="10" cy="17" r="7" fill="#FFC21A"></circle><circle cx="22" cy="17" r="7" fill="#FFC21A"></circle><circle cx="16" cy="23" r="7" fill="#FFC21A"></circle><circle cx="16" cy="16" r="5" fill="#B8420F"></circle></svg>
+      Día de Muertos
+    </a>
+    <nav aria-label="Secciones" style="display: flex; flex-wrap: wrap; gap: 26px; font-size: 14px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase">
+      <a href="#porque" style="color: #FFF1DC; text-decoration: none">Por qué</a>
+      <a href="#ofrenda" style="color: #FFF1DC; text-decoration: none">Tu ofrenda</a>
+      <a href="#fiesta" style="color: #FFF1DC; text-decoration: none">La fiesta</a>
+      <a href="#catrina" style="color: #FFF1DC; text-decoration: none">La Catrina</a>
+    </nav>
+  </header>
+
+  <!-- ================= HERO ================= -->
+  <section id="inicio" class="pad" style="position: relative; overflow: hidden; display: flex; flex-wrap: wrap; align-items: center; gap: 48px; padding: 40px 80px 120px">
+    <div aria-hidden="true" style="position: absolute; inset: 0; pointer-events: none">
+      <sc-for list="{{petals}}" as="p" hint-placeholder-count="16">
+        <div class="petal" style="position: absolute; top: 0; left: {{p.x}}%; width: {{p.size}}px; height: {{p.size2}}px; border-radius: 60% 40% 60% 40%; background: {{p.color}}; animation-duration: {{p.dur}}s; animation-delay: {{p.delay}}s"></div>
+      </sc-for>
+    </div>
+    <div aria-hidden="true" class="flightA hide-sm" style="position: absolute; top: 110px; right: -80px">
+      <svg width="56" height="44" viewBox="0 0 56 44"><g class="wing"><path d="M28 22 C20 4 4 0 2 10 C0 20 14 22 28 22 Z M28 22 C18 26 6 34 12 42 C18 46 26 34 28 22 Z" fill="#FFC21A" stroke="#2A0F14" stroke-width="2.5"></path><path d="M28 22 C36 4 52 0 54 10 C56 20 42 22 28 22 Z M28 22 C38 26 50 34 44 42 C38 46 30 34 28 22 Z" fill="#FFC21A" stroke="#2A0F14" stroke-width="2.5"></path></g><rect x="26.5" y="12" width="3" height="22" rx="1.5" fill="#2A0F14"></rect></svg>
+    </div>
+    <div aria-hidden="true" class="flightB hide-sm" style="position: absolute; top: 430px; right: -80px">
+      <svg width="40" height="32" viewBox="0 0 56 44"><g class="wing" style="animation-duration: .38s"><path d="M28 22 C20 4 4 0 2 10 C0 20 14 22 28 22 Z M28 22 C18 26 6 34 12 42 C18 46 26 34 28 22 Z" fill="#FFC21A" stroke="#2A0F14" stroke-width="2.5"></path><path d="M28 22 C36 4 52 0 54 10 C56 20 42 22 28 22 Z M28 22 C38 26 50 34 44 42 C38 46 30 34 28 22 Z" fill="#FFC21A" stroke="#2A0F14" stroke-width="2.5"></path></g><rect x="26.5" y="12" width="3" height="22" rx="1.5" fill="#2A0F14"></rect></svg>
+    </div>
+
+    <div style="position: relative; z-index: 2; flex: 999 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 26px">
+      <p class="rise" style="margin: 0; display: inline-flex; align-self: flex-start; padding: 8px 18px; background: #F5821F; color: #2A0F14; font-size: 14px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; border-radius: 999px">1 y 2 de noviembre · México</p>
+      <h1 class="rise2" style="margin: 0; display: flex; flex-direction: column; font-family: 'Abril Fatface', serif; font-weight: 400; color: #FFF1DC; text-shadow: 0 4px 30px rgba(0,0,0,0.45)">
+        <span class="hero-title" style="font-size: 128px; line-height: 0.9">Recordar</span>
+        <span style="align-self: flex-start; margin: 4px 0 0 8px; font-family: 'Caveat', cursive; font-size: 64px; line-height: 1; color: #FFC21A; transform: rotate(-4deg)">es volver</span>
+        <span class="hero-title" style="font-size: 150px; line-height: 0.95; color: #F5821F; text-shadow: 6px 6px 0 #E4007C">a vivir</span>
+      </h1>
+      <p class="rise3" style="margin: 0; max-width: 540px; font-size: 20px; line-height: 1.6; color: #F3DCC6">Cada año las familias ponen ofrendas, llenan el camino de cempasúchil y encienden miles de velas para esperar a sus seres queridos. No es una noche de miedo: es una fiesta para recordarlos.</p>
+      <div class="rise3" style="display: flex; flex-wrap: wrap; gap: 16px">
+        <a class="btn" href="#ofrenda" style="display: inline-flex; align-items: center; min-height: 54px; padding: 0 30px; background: #FFC21A; color: #2A0F14; font-weight: 800; font-size: 16px; text-decoration: none; border-radius: 14px">Explora la ofrenda</a>
+        <a class="btn" href="#porque" style="display: inline-flex; align-items: center; min-height: 54px; padding: 0 30px; border: 2px solid #FFF1DC; color: #FFF1DC; font-weight: 700; font-size: 16px; text-decoration: none; border-radius: 14px">¿Por qué se celebra?</a>
+      </div>
+    </div>
+
+    <!-- Catrina dentro de un nicho de cempasúchil -->
+    <div style="position: relative; z-index: 2; flex: 1 1 380px; display: flex; justify-content: center">
+      <!-- sello giratorio -->
+      <svg aria-hidden="true" class="spin hide-sm" width="150" height="150" viewBox="0 0 150 150" style="position: absolute; z-index: 3; top: 10px; left: -10px; animation-duration: 24s">
+        <defs><path id="sello" d="M75 75 m-56 0 a56 56 0 1 1 112 0 a56 56 0 1 1 -112 0"></path></defs>
+        <circle cx="75" cy="75" r="72" fill="#E4007C" stroke="#2A0F14" stroke-width="4"></circle>
+        <text font-family="Nunito Sans, sans-serif" font-size="13" font-weight="800" letter-spacing="3" fill="#FFF1DC"><textPath href="#sello">DÍA DE MUERTOS · MÉXICO · 1 Y 2 NOV ·</textPath></text>
+        <circle cx="75" cy="64" r="11" fill="#FFC21A"></circle><circle cx="64" cy="75" r="11" fill="#FFC21A"></circle><circle cx="86" cy="75" r="11" fill="#FFC21A"></circle><circle cx="75" cy="86" r="11" fill="#FFC21A"></circle>
+        <circle cx="75" cy="75" r="7" fill="#B8420F"></circle>
+      </svg>
+      <div style="position: relative; width: 440px; max-width: 100%; aspect-ratio: 440 / 580">
+        <div style="position: absolute; left: 5.45%; right: 5.45%; top: 6.2%; bottom: 0; overflow: hidden; border-radius: 50% 50% 0 0 / 36% 36% 0 0; background: #2A0F14; box-shadow: 0 0 80px rgba(245,130,31,0.45)">
+          <img class="kenburns" src="fotos/2-portada-catrina-vela.png" alt="Mujer caracterizada de Catrina, con sombrero de cempasúchil y velo negro, sostiene una vela encendida en un panteón al anochecer" style="display: block; width: 100%; height: 100%; object-fit: cover; object-position: 28% 40%">
+          <div aria-hidden="true" class="candleglow" style="position: absolute; left: 79%; top: 62%; width: 180px; height: 180px; margin: -90px 0 0 -90px; border-radius: 50%; background: radial-gradient(circle, rgba(255,194,26,0.6) 0%, rgba(255,194,26,0) 70%); mix-blend-mode: screen"></div>
+          <div aria-hidden="true" style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(42,15,20,0) 62%, rgba(42,15,20,0.75) 100%)"></div>
+          <p style="position: absolute; left: 0; right: 0; bottom: 18px; margin: 0; text-align: center; font-family: 'Caveat', cursive; font-size: 28px; color: #FFC21A">La Catrina espera en el panteón</p>
+        </div>
+        <svg aria-hidden="true" viewBox="0 0 440 580" style="position: absolute; inset: 0; width: 100%; height: 100%">
+          <path d="M24 580 V232 A196 196 0 0 1 416 232 V580" fill="none" stroke="#FFC21A" stroke-width="26" stroke-dasharray="0 30" stroke-linecap="round"></path>
+          <path d="M24 580 V232 A196 196 0 0 1 416 232 V580" fill="none" stroke="#E4007C" stroke-width="9" stroke-dasharray="0 30" stroke-linecap="round"></path>
+        </svg>
+      </div>
+    </div>
+
+
+    <!-- guirnalda de cempasúchil -->
+    <div aria-hidden="true" style="position: absolute; z-index: 3; left: -20px; right: -20px; bottom: -26px; display: flex; align-items: flex-end; pointer-events: none">
+      <sc-for list="{{garland}}" as="g" hint-placeholder-count="40">
+        <div class="bob" style="flex: none; margin-left: -16px; animation-duration: {{g.d}}s; animation-delay: {{g.delay}}s">
+          <svg width="{{g.size}}" height="{{g.size}}" viewBox="0 0 40 40" style="display: block; transform: rotate({{g.rot}}deg)">
+            <sc-if value="{{g.leaf}}" hint-placeholder-val="{{ false }}">
+              <path d="M20 22 C26 10 38 8 40 4 C38 16 30 24 20 22 Z" fill="#2E8B3E"></path>
+            </sc-if>
+            <circle cx="32" cy="20" r="6.5" fill="{{g.c1}}"></circle><circle cx="28.5" cy="28.5" r="6.5" fill="{{g.c1}}"></circle><circle cx="20" cy="32" r="6.5" fill="{{g.c1}}"></circle><circle cx="11.5" cy="28.5" r="6.5" fill="{{g.c1}}"></circle>
+            <circle cx="8" cy="20" r="6.5" fill="{{g.c1}}"></circle><circle cx="11.5" cy="11.5" r="6.5" fill="{{g.c1}}"></circle><circle cx="20" cy="8" r="6.5" fill="{{g.c1}}"></circle><circle cx="28.5" cy="11.5" r="6.5" fill="{{g.c1}}"></circle>
+            <circle cx="27" cy="20" r="5" fill="{{g.c2}}"></circle><circle cx="23.5" cy="26.1" r="5" fill="{{g.c2}}"></circle><circle cx="16.5" cy="26.1" r="5" fill="{{g.c2}}"></circle><circle cx="13" cy="20" r="5" fill="{{g.c2}}"></circle><circle cx="16.5" cy="13.9" r="5" fill="{{g.c2}}"></circle><circle cx="23.5" cy="13.9" r="5" fill="{{g.c2}}"></circle>
+            <circle cx="20" cy="20" r="4.5" fill="{{g.c3}}"></circle>
+          </svg>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+  </div>
+
+  <!-- franja de datos -->
+  <div class="pad" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; padding: 8px 80px 40px; background: #2A0F14; color: #FFF1DC">
+    <div style="display: flex; align-items: baseline; gap: 14px; padding-top: 18px; border-top: 2px solid #5A2A18">
+      <span style="font-family: 'Abril Fatface', serif; font-size: 52px; line-height: 1; color: #FFC21A">2</span>
+      <span style="font-size: 16px; line-height: 1.4">días para recibir<br>a los que se fueron</span>
+    </div>
+    <div style="display: flex; align-items: baseline; gap: 14px; padding-top: 18px; border-top: 2px solid #5A2A18">
+      <span style="font-family: 'Abril Fatface', serif; font-size: 52px; line-height: 1; color: #F5821F">+3,000</span>
+      <span style="font-size: 16px; line-height: 1.4">años de<br>historia</span>
+    </div>
+    <div style="display: flex; align-items: baseline; gap: 14px; padding-top: 18px; border-top: 2px solid #5A2A18">
+      <span style="font-family: 'Abril Fatface', serif; font-size: 52px; line-height: 1; color: #FF5AAE">2008</span>
+      <span style="font-size: 16px; line-height: 1.4">Patrimonio Cultural<br>de la Humanidad</span>
+    </div>
+  </div>
+
+
+  <!-- ================= POR QUÉ ================= -->
+  <section id="porque" class="pad" style="padding: 110px 80px 130px; background: #FFF1DC; color: #2A0F14; display: flex; flex-direction: column; gap: 56px">
+    <div style="display: flex; flex-direction: column; gap: 16px; max-width: 780px">
+      <p style="margin: 0; font-size: 14px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: #B8420F">Por qué se celebra</p>
+      <h2 class="sec-title" style="margin: 0; font-family: 'Abril Fatface', serif; font-weight: 400; font-size: 70px; line-height: 1.02">Una tradición con más de 3,000 años</h2>
+    </div>
+    <p style="margin: -36px 0 0; font-family: 'Caveat', cursive; font-size: 28px; color: #B8420F">Pasa el cursor para desdoblar el códice</p>
+
+    <!-- CÓDICE (biombo de 3 páginas) -->
+    <div class="codex" style="display: flex; flex-direction: column">
+      <svg aria-hidden="true" width="1280" height="34" style="display: block; width: 100%; height: 34px"><defs><pattern id="greca1" width="44" height="34" patternUnits="userSpaceOnUse"><rect width="44" height="34" fill="#B8420F"></rect><path d="M4 30 V4 H32 V22 H16 V14 H24" stroke="#2A0F14" stroke-width="5" fill="none" stroke-linecap="square"></path></pattern></defs><rect width="100%" height="34" fill="url(#greca1)"></rect></svg>
+      <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); perspective: 1600px" class="codex-row">
+        <!-- página 1 -->
+        <article class="fold fold-a" style="display: flex; flex-direction: column; gap: 14px; padding: 36px 32px 40px; background: #D9A066; background-image: linear-gradient(90deg, rgba(255,241,220,0.25), rgba(42,15,20,0.12)); border-left: 4px solid #2A0F14; border-right: 2px dashed #8E5A22">
+          <svg width="220" height="150" viewBox="0 0 220 150" role="img" aria-label="Pirámide del Mictlán con un perro xoloitzcuintle" style="max-width: 100%">
+            <rect x="40" y="110" width="140" height="30" fill="#B8420F" stroke="#2A0F14" stroke-width="4"></rect>
+            <rect x="60" y="80" width="100" height="30" fill="#B8420F" stroke="#2A0F14" stroke-width="4"></rect>
+            <rect x="80" y="54" width="60" height="26" fill="#B8420F" stroke="#2A0F14" stroke-width="4"></rect>
+            <rect x="100" y="80" width="20" height="60" fill="#2A0F14"></rect>
+            <circle cx="110" cy="32" r="20" fill="#FFF1DC" stroke="#2A0F14" stroke-width="4"></circle>
+            <circle cx="103" cy="30" r="5" fill="#2A0F14"></circle><circle cx="117" cy="30" r="5" fill="#2A0F14"></circle>
+            <path d="M104 44 H116" stroke="#2A0F14" stroke-width="3"></path>
+            <path d="M8 124 C12 112 26 110 34 116 L40 104 L42 118 C44 126 40 134 32 134 L30 142 M14 132 L12 142" stroke="#2A0F14" stroke-width="4" fill="#2A0F14" stroke-linejoin="round"></path>
+            <path d="M190 142 C196 136 206 136 214 142" stroke="#0E9C9C" stroke-width="5" fill="none" stroke-linecap="round"></path>
+          </svg>
+          <span style="font-family: 'Caveat', cursive; font-size: 26px; color: #5A2A18">Antes de la Conquista</span>
+          <h3 style="margin: 0; font-family: 'Abril Fatface', serif; font-weight: 400; font-size: 34px; line-height: 1.05">El viaje al Mictlán</h3>
+          <p style="margin: 0; font-size: 16px; line-height: 1.6; color: #3A160E">Mexicas, mayas y purépechas honraban a sus muertos. Los mexicas creían que las almas viajaban al Mictlán, el lugar de los muertos, cuidado por la diosa Mictecacíhuatl.</p>
+          <p style="margin: 0; padding-top: 12px; border-top: 2px solid #8E5A22; font-size: 14px; line-height: 1.5; color: #3A160E"><strong>Dato:</strong> se creía que un perro xoloitzcuintle ayudaba a las almas a cruzar el río del inframundo.</p>
+        </article>
+        <!-- página 2 -->
+        <article class="fold fold-b" style="display: flex; flex-direction: column; gap: 14px; padding: 36px 32px 40px; background: #CC8F55; background-image: linear-gradient(90deg, rgba(42,15,20,0.14), rgba(255,241,220,0.2)); border-right: 2px dashed #8E5A22">
+          <svg width="220" height="150" viewBox="0 0 220 150" role="img" aria-label="Iglesia colonial con campana y una vela" style="max-width: 100%">
+            <rect x="60" y="60" width="100" height="84" fill="#FFF1DC" stroke="#2A0F14" stroke-width="4"></rect>
+            <path d="M54 62 L110 24 L166 62 Z" fill="#E4007C" stroke="#2A0F14" stroke-width="4" stroke-linejoin="round"></path>
+            <path d="M110 4 V22 M102 12 H118" stroke="#2A0F14" stroke-width="4"></path>
+            <path d="M96 144 V108 A14 14 0 0 1 124 108 V144 Z" fill="#2A0F14"></path>
+            <path d="M98 74 C98 64 122 64 122 74 L124 90 H96 Z" fill="#FFC21A" stroke="#2A0F14" stroke-width="3"></path>
+            <rect x="180" y="104" width="14" height="40" fill="#FFF1DC" stroke="#2A0F14" stroke-width="3"></rect>
+            <ellipse cx="187" cy="94" rx="6" ry="10" fill="#F5821F"></ellipse>
+            <circle cx="28" cy="122" r="12" fill="#F5821F" stroke="#2A0F14" stroke-width="3"></circle><circle cx="28" cy="122" r="5" fill="#B8420F"></circle>
+            <path d="M28 134 V146" stroke="#2E8B3E" stroke-width="4"></path>
+          </svg>
+          <span style="font-family: 'Caveat', cursive; font-size: 26px; color: #5A2A18">Siglo XVI</span>
+          <h3 style="margin: 0; font-family: 'Abril Fatface', serif; font-weight: 400; font-size: 34px; line-height: 1.05">Dos mundos se mezclan</h3>
+          <p style="margin: 0; font-size: 16px; line-height: 1.6; color: #3A160E">Con la llegada de los españoles, estos rituales se unieron a las fiestas católicas de Todos los Santos y Fieles Difuntos. Así nació una celebración que solo existe en México.</p>
+          <p style="margin: 0; padding-top: 12px; border-top: 2px solid #8E5A22; font-size: 14px; line-height: 1.5; color: #3A160E"><strong>Dato:</strong> por eso hoy conviven en el altar el copal prehispánico y las velas y cruces católicas.</p>
+        </article>
+        <!-- página 3 -->
+        <article class="fold fold-a" style="display: flex; flex-direction: column; gap: 14px; padding: 36px 32px 40px; background: #D9A066; background-image: linear-gradient(90deg, rgba(255,241,220,0.25), rgba(42,15,20,0.12)); border-right: 4px solid #2A0F14">
+          <svg width="220" height="150" viewBox="0 0 220 150" role="img" aria-label="Sello de Patrimonio de la Humanidad 2008" style="max-width: 100%">
+            <circle cx="110" cy="75" r="66" fill="none" stroke="#0E9C9C" stroke-width="6" stroke-dasharray="10 6"></circle>
+            <circle cx="110" cy="75" r="54" fill="#0E9C9C" stroke="#2A0F14" stroke-width="4"></circle>
+            <circle cx="110" cy="58" r="12" fill="#FFC21A"></circle><circle cx="98" cy="68" r="12" fill="#FFC21A"></circle><circle cx="122" cy="68" r="12" fill="#FFC21A"></circle><circle cx="110" cy="76" r="12" fill="#FFC21A"></circle>
+            <circle cx="110" cy="67" r="6" fill="#B8420F"></circle>
+            <text x="110" y="112" text-anchor="middle" font-family="Abril Fatface, serif" font-size="20" fill="#FFF1DC">2008</text>
+          </svg>
+          <span style="font-family: 'Caveat', cursive; font-size: 26px; color: #5A2A18">2008</span>
+          <h3 style="margin: 0; font-family: 'Abril Fatface', serif; font-weight: 400; font-size: 34px; line-height: 1.05">Patrimonio del mundo</h3>
+          <p style="margin: 0; font-size: 16px; line-height: 1.6; color: #3A160E">La UNESCO inscribió las fiestas indígenas dedicadas a los muertos en la Lista del Patrimonio Cultural Inmaterial de la Humanidad.</p>
+          <p style="margin: 0; padding-top: 12px; border-top: 2px solid #8E5A22; font-size: 14px; line-height: 1.5; color: #3A160E"><strong>Dato:</strong> fue la primera vez que México entró a esa lista con una tradición viva.</p>
+        </article>
+      </div>
+      <svg aria-hidden="true" width="1280" height="34" style="display: block; width: 100%; height: 34px"><defs><pattern id="greca2" width="44" height="34" patternUnits="userSpaceOnUse"><rect width="44" height="34" fill="#B8420F"></rect><path d="M40 4 V30 H12 V12 H28 V20 H20" stroke="#2A0F14" stroke-width="5" fill="none" stroke-linecap="square"></path></pattern></defs><rect width="100%" height="34" fill="url(#greca2)"></rect></svg>
+    </div>
+
+    <!-- HOJAS DE CALENDARIO -->
+    <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 48px; margin-top: 24px">
+      <div style="flex: 1 1 280px; display: flex; flex-direction: column; gap: 12px">
+        <h3 style="margin: 0; font-family: 'Abril Fatface', serif; font-weight: 400; font-size: 48px; line-height: 1.02">Dos días, dos visitas</h3>
+        <p style="margin: 0; font-size: 17px; line-height: 1.6; color: #5A2A18">Las almas no llegan todas juntas. Primero vienen los niños y al día siguiente los adultos.</p>
+      </div>
+      <div style="flex: 2 1 560px; display: flex; flex-wrap: wrap; justify-content: center; gap: 36px">
+        <div class="cal" style="position: relative; width: 260px; display: flex; flex-direction: column; background: #FFFFFF; border-radius: 6px; box-shadow: 0 16px 34px rgba(42,15,20,0.2); transform: rotate(-3deg)">
+          <div aria-hidden="true" style="position: absolute; top: -12px; left: calc(50% - 12px); width: 24px; height: 24px; border-radius: 50%; background: #0E9C9C; border: 3px solid #2A0F14"></div>
+          <div style="padding: 18px 0 12px; background: #E4007C; color: #FFF1DC; text-align: center; font-size: 15px; font-weight: 800; letter-spacing: 0.24em; border-radius: 6px 6px 0 0">NOVIEMBRE</div>
+          <div style="padding: 10px 24px 28px; display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; border-bottom: 3px dotted #E8CDB0">
+            <span style="font-family: 'Abril Fatface', serif; font-size: 132px; line-height: 1; color: #E4007C">1</span>
+            <strong style="font-size: 20px">Todos Santos</strong>
+            <span style="font-size: 15px; line-height: 1.5; color: #5A2A18">Se recuerda a los niños que murieron, llamados "angelitos". Sus ofrendas llevan dulces y juguetes.</span>
+          </div>
+        </div>
+        <div class="cal" style="position: relative; width: 260px; display: flex; flex-direction: column; background: #FFFFFF; border-radius: 6px; box-shadow: 0 16px 34px rgba(42,15,20,0.2); transform: rotate(2.5deg)">
+          <div aria-hidden="true" style="position: absolute; top: -12px; left: calc(50% - 12px); width: 24px; height: 24px; border-radius: 50%; background: #FFC21A; border: 3px solid #2A0F14"></div>
+          <div style="padding: 18px 0 12px; background: #2A0F14; color: #FFC21A; text-align: center; font-size: 15px; font-weight: 800; letter-spacing: 0.24em; border-radius: 6px 6px 0 0">NOVIEMBRE</div>
+          <div style="padding: 10px 24px 28px; display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; border-bottom: 3px dotted #E8CDB0">
+            <span style="font-family: 'Abril Fatface', serif; font-size: 132px; line-height: 1; color: #2A0F14">2</span>
+            <strong style="font-size: 20px">Fieles Difuntos</strong>
+            <span style="font-size: 15px; line-height: 1.5; color: #5A2A18">Llegan las almas de los adultos. Muchas familias velan toda la noche en el panteón.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ARMA TU OFRENDA ================= -->
+  <section id="ofrenda" class="pad" style="padding: 110px 80px; background: #B8420F; color: #FFF1DC; display: flex; flex-direction: column; gap: 48px">
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 24px">
+      <div style="display: flex; flex-direction: column; gap: 16px; max-width: 680px">
+        <p style="margin: 0; font-size: 14px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: #FFC21A">Interactivo</p>
+        <h2 class="sec-title" style="margin: 0; font-family: 'Abril Fatface', serif; font-weight: 400; font-size: 70px; line-height: 1.02">Arma tu ofrenda</h2>
+        <p style="margin: 0; font-size: 17px; line-height: 1.6; color: #FFE0C2">Toca los números sobre la foto, o los botones, para descubrir qué significa cada elemento de una ofrenda real.</p>
+      </div>
+      <p style="margin: 0; display: flex; flex-direction: column; align-items: flex-end; font-family: 'Abril Fatface', serif; font-size: 44px; line-height: 1; color: #FFC21A">{{count}} / 8<span style="font-family: 'Nunito Sans', sans-serif; font-size: 13px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: #FFE0C2">descubiertos</span></p>
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 48px; align-items: center">
+      <div style="flex: 1 1 520px; min-width: 0; display: flex; justify-content: center">
+        <div style="position: relative; width: 100%; max-width: 640px; aspect-ratio: 1 / 1; border: 8px solid #FFC21A; border-radius: 28px; overflow: hidden; box-shadow: 0 24px 60px rgba(42,15,20,0.45)">
+          <img src="fotos/3-ofrenda-altar.jpg" alt="Ofrenda de Día de Muertos de varios niveles con cempasúchil, velas, pan de muerto, calaveritas de azúcar y papel picado" style="display: block; width: 100%; height: 100%; object-fit: cover">
+          <sc-for list="{{items}}" as="it" hint-placeholder-count="8">
+            <button class="{{it.cls}}" type="button" aria-label="{{it.nombre}}" aria-pressed="{{it.on}}" onClick="{{it.pick}}" style="position: absolute; left: calc({{it.x}}% - 20px); top: calc({{it.y}}% - 20px); width: 40px; height: 40px; padding: 0; border: 3px solid #2A0F14; border-radius: 50%; background: {{it.dot}}; color: #2A0F14; font-family: 'Nunito Sans', sans-serif; font-size: 16px; font-weight: 800; cursor: pointer">{{it.n}}</button>
+            <sc-if value="{{it.sel}}" hint-placeholder-val="{{ false }}">
+              <div style="position: absolute; left: calc({{it.x}}% - 90px); top: calc({{it.y}}% + 26px); width: 180px; padding: 8px 10px; border-radius: 10px; background: #2A0F14; color: #FFC21A; font-size: 14px; font-weight: 800; text-align: center; pointer-events: none">{{it.nombre}}</div>
+            </sc-if>
+          </sc-for>
+        </div>
+      </div>
+
+      <div style="flex: 1 1 380px; min-width: 0; display: flex; flex-direction: column; gap: 20px">
+        <div style="display: flex; flex-direction: column; gap: 10px; min-height: 150px; padding: 26px 28px; background: #FFF1DC; color: #2A0F14; border-radius: 22px">
+          <span style="font-family: 'Caveat', cursive; font-size: 26px; color: #B8420F">{{infoTag}}</span>
+          <h3 style="margin: 0; font-family: 'Abril Fatface', serif; font-weight: 400; font-size: 34px; line-height: 1.05">{{infoTitle}}</h3>
+          <p style="margin: 0; font-size: 17px; line-height: 1.55; color: #5A2A18">{{infoText}}</p>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+          <sc-for list="{{items}}" as="it" hint-placeholder-count="8">
+            <button class="chip" type="button" aria-pressed="{{it.on}}" onClick="{{it.pick}}" style="display: flex; align-items: center; gap: 10px; min-height: 52px; padding: 8px 14px; border: 2px solid {{it.border}}; border-radius: 14px; background: {{it.bg}}; color: {{it.fg}}; font-family: 'Nunito Sans', sans-serif; font-size: 15px; font-weight: 800; text-align: left">
+              <span style="flex: none; display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; background: {{it.dot}}; color: #2A0F14; font-size: 14px">{{it.n}}</span>
+              {{it.nombre}}
+            </button>
+          </sc-for>
+        </div>
+        <p style="margin: 0; font-family: 'Caveat', cursive; font-size: 30px; color: {{msgColor}}">{{msg}}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= LA FIESTA ================= -->
+  <section id="fiesta" class="pad" onMouseEnter="{{enterFiesta}}" onMouseLeave="{{leaveFiesta}}" style="position: relative; overflow: hidden; padding: 110px 80px; background: #0B5E5E; color: #FFF1DC; display: flex; flex-wrap: wrap; align-items: center; gap: 56px">
+    <div style="position: relative; flex: 1 1 340px; display: flex; justify-content: center">
+      <svg aria-hidden="true" class="note" width="30" height="40" viewBox="0 0 30 40" style="position: absolute; top: 120px; left: 62%"><path d="M10 32 V6 L26 2 V26" stroke="#FFC21A" stroke-width="3" fill="none"></path><ellipse cx="7" cy="32" rx="6" ry="5" fill="#FFC21A"></ellipse><ellipse cx="23" cy="27" rx="6" ry="5" fill="#FFC21A"></ellipse></svg>
+      <svg aria-hidden="true" class="note" width="22" height="34" viewBox="0 0 22 34" style="position: absolute; top: 160px; left: 70%; animation-delay: 1s"><path d="M12 28 V2 Q20 6 20 14" stroke="#FF5AAE" stroke-width="3" fill="none"></path><ellipse cx="8" cy="28" rx="7" ry="5" fill="#FF5AAE"></ellipse></svg>
+      <svg aria-hidden="true" class="note" width="22" height="34" viewBox="0 0 22 34" style="position: absolute; top: 140px; left: 56%; animation-delay: 2s"><path d="M12 28 V2 Q20 6 20 14" stroke="#F5821F" stroke-width="3" fill="none"></path><ellipse cx="8" cy="28" rx="7" ry="5" fill="#F5821F"></ellipse></svg>
+
+      <svg width="380" height="480" viewBox="0 0 380 480" role="img" aria-label="Esqueleto mariachi tocando la guitarra" style="max-width: 100%; height: auto">
+        <ellipse cx="190" cy="474" rx="130" ry="10" fill="#084848"></ellipse>
+        <rect x="150" y="380" width="32" height="96" fill="#2A0F14"></rect>
+        <rect x="198" y="380" width="32" height="96" fill="#2A0F14"></rect>
+        <path d="M156 384 V470 M224 384 V470" stroke="#FFC21A" stroke-width="3" stroke-dasharray="2 8" stroke-linecap="round"></path>
+        <path d="M120 236 H260 L272 392 H108 Z" fill="#2A0F14"></path>
+        <path d="M150 236 L190 300 L230 236" fill="#FFF1DC"></path>
+        <path d="M130 250 Q150 300 140 340 M250 250 Q230 300 240 340" stroke="#FFC21A" stroke-width="4" fill="none" stroke-dasharray="2 9" stroke-linecap="round"></path>
+        <circle cx="190" cy="320" r="4" fill="#FFC21A"></circle><circle cx="190" cy="340" r="4" fill="#FFC21A"></circle><circle cx="190" cy="360" r="4" fill="#FFC21A"></circle>
+        <path d="M170 240 L190 250 L170 262 Z M210 240 L190 250 L210 262 Z" fill="#E4007C"></path>
+        <g transform="rotate(-28 200 320)">
+          <rect x="196" y="160" width="14" height="140" fill="#8E5A22"></rect>
+          <rect x="192" y="150" width="22" height="20" rx="3" fill="#5C3A16"></rect>
+          <ellipse cx="203" cy="300" rx="46" ry="38" fill="#F5821F"></ellipse>
+          <ellipse cx="203" cy="350" rx="58" ry="46" fill="#F5821F"></ellipse>
+          <circle cx="203" cy="318" r="16" fill="#2A0F14"></circle>
+          <circle cx="203" cy="318" r="22" fill="none" stroke="#FFC21A" stroke-width="3"></circle>
+          <rect x="186" y="360" width="34" height="8" fill="#5C3A16"></rect>
+        </g>
+        <path d="M128 250 L96 300 L140 270" stroke="#FFF1DC" stroke-width="10" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+        <g class="strum">
+          <path d="M254 250 L276 310 L236 340" stroke="#FFF1DC" stroke-width="10" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+          <circle cx="232" cy="342" r="9" fill="#FFF1DC"></circle>
+        </g>
+        <g class="nod">
+          <rect x="178" y="210" width="24" height="30" fill="#FFF1DC"></rect>
+          <ellipse cx="190" cy="166" rx="52" ry="56" fill="#FFF1DC"></ellipse>
+          <rect x="158" y="196" width="64" height="40" rx="18" fill="#FFF1DC"></rect>
+          <circle cx="170" cy="164" r="16" fill="#2A0F14"></circle>
+          <circle cx="210" cy="164" r="16" fill="#2A0F14"></circle>
+          <circle cx="170" cy="164" r="5" fill="#F5821F"></circle>
+          <circle cx="210" cy="164" r="5" fill="#F5821F"></circle>
+          <path d="M190 182 L183 196 Q190 200 197 196 Z" fill="#2A0F14"></path>
+          <path d="M168 216 H212 M176 208 V224 M186 208 V226 M196 208 V226 M206 208 V224" stroke="#2A0F14" stroke-width="2.5" stroke-linecap="round"></path>
+          <path d="M150 140 Q170 132 176 144 M230 140 Q210 132 204 144" stroke="#E4007C" stroke-width="3" fill="none"></path>
+          <ellipse cx="190" cy="118" rx="140" ry="26" fill="#2A0F14"></ellipse>
+          <ellipse cx="190" cy="118" rx="140" ry="26" fill="none" stroke="#FFC21A" stroke-width="4" stroke-dasharray="2 10" stroke-linecap="round"></ellipse>
+          <path d="M146 118 C146 52 234 52 234 118 Z" fill="#2A0F14"></path>
+          <path d="M148 104 C176 112 204 112 232 104" stroke="#FFC21A" stroke-width="6" fill="none"></path>
+        </g>
+      </svg>
+    </div>
+
+    <div style="flex: 999 1 480px; min-width: 0; display: flex; flex-direction: column; gap: 22px">
+      <p style="margin: 0; font-size: 14px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: #FFC21A">La fiesta</p>
+      <h2 class="sec-title" style="margin: 0; font-family: 'Abril Fatface', serif; font-weight: 400; font-size: 70px; line-height: 1.02">Música, comida y una noche en el panteón</h2>
+      <p style="margin: 0; max-width: 600px; font-size: 18px; line-height: 1.65; color: #D5F0EC">En lugares como Pátzcuaro y Janitzio, en Michoacán, o Mixquic, en la Ciudad de México, las familias pasan la noche en el panteón. Limpian y adornan las tumbas, encienden velas, comparten comida y a veces llevan mariachi para tocarle sus canciones favoritas a quien ya no está.</p>
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 16px; padding: 14px 16px 14px 14px; background: #084848; border-radius: 18px; max-width: 600px">
+        <button class="btn" type="button" onClick="{{toggleMusic}}" aria-pressed="{{musicOn}}" style="display: inline-flex; align-items: center; gap: 10px; min-height: 52px; padding: 0 22px; border: none; border-radius: 999px; background: {{musicBg}}; color: #2A0F14; font-family: 'Nunito Sans', sans-serif; font-size: 16px; font-weight: 800; cursor: pointer">
+          <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><path d="M8 17 V4 L19 2 V15" stroke="#2A0F14" stroke-width="2.4" fill="none" stroke-linejoin="round"></path><circle cx="5.5" cy="17" r="3.5" fill="#2A0F14"></circle><circle cx="16.5" cy="15" r="3.5" fill="#2A0F14"></circle></svg>
+          {{musicLabel}}
+        </button>
+        <div style="display: flex; flex-direction: column; gap: 2px; min-width: 0">
+          <span style="font-family: 'Caveat', cursive; font-size: 24px; line-height: 1; color: #FFC21A">La Llorona</span>
+          <span style="font-size: 13px; color: #D5F0EC">{{musicHint}}</span>
+        </div>
+        <sc-if value="{{playing}}" hint-placeholder-val="{{ false }}">
+          <div aria-hidden="true" style="display: flex; align-items: flex-end; gap: 4px; height: 26px">
+            <div class="eq" style="width: 5px; height: 26px; background: #FFC21A; border-radius: 3px"></div>
+            <div class="eq" style="width: 5px; height: 26px; background: #F5821F; border-radius: 3px; animation-delay: .2s"></div>
+            <div class="eq" style="width: 5px; height: 26px; background: #FF5AAE; border-radius: 3px; animation-delay: .4s"></div>
+            <div class="eq" style="width: 5px; height: 26px; background: #FFF1DC; border-radius: 3px; animation-delay: .1s"></div>
+          </div>
+        </sc-if>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 10px">
+        <sc-for list="{{comida}}" as="c" hint-placeholder-count="5">
+          <span style="padding: 10px 18px; border-radius: 999px; background: {{c.bg}}; color: {{c.fg}}; font-weight: 800; font-size: 15px">{{c.nombre}}</span>
+        </sc-for>
+      </div>
+      <div style="display: flex; gap: 14px; align-items: flex-start; padding: 20px; border: 2px dashed #FFC21A; border-radius: 16px; max-width: 600px">
+        <svg width="40" height="32" viewBox="0 0 56 44" aria-hidden="true" style="flex: none"><path d="M28 22 C20 4 4 0 2 10 C0 20 14 22 28 22 Z M28 22 C18 26 6 34 12 42 C18 46 26 34 28 22 Z M28 22 C36 4 52 0 54 10 C56 20 42 22 28 22 Z M28 22 C38 26 50 34 44 42 C38 46 30 34 28 22 Z" fill="#F5821F" stroke="#2A0F14" stroke-width="2"></path></svg>
+        <p style="margin: 0; font-size: 16px; line-height: 1.55; color: #D5F0EC">Las mariposas monarca llegan a México justo en estas fechas. En Michoacán se dice que son las almas de los difuntos que regresan a visitar.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= GALERÍA ================= -->
+  <section class="pad" style="position: relative; overflow: hidden; padding: 110px 80px 130px; background: #FFF1DC; color: #2A0F14; display: flex; flex-direction: column; gap: 40px">
+    <!-- pétalos sueltos de fondo -->
+    <div aria-hidden="true" style="position: absolute; inset: 0; pointer-events: none">
+      <div style="position: absolute; top: 70px; right: 9%; width: 16px; height: 22px; border-radius: 60% 40% 60% 40%; background: #F5821F; transform: rotate(30deg); opacity: 0.6"></div>
+      <div style="position: absolute; top: 150px; right: 22%; width: 12px; height: 16px; border-radius: 60% 40% 60% 40%; background: #FFC21A; transform: rotate(-20deg); opacity: 0.7"></div>
+      <div style="position: absolute; bottom: 60px; left: 6%; width: 18px; height: 24px; border-radius: 60% 40% 60% 40%; background: #E4007C; transform: rotate(60deg); opacity: 0.35"></div>
+      <div style="position: absolute; bottom: 90px; right: 12%; width: 14px; height: 20px; border-radius: 60% 40% 60% 40%; background: #F5821F; transform: rotate(-45deg); opacity: 0.5"></div>
+      <div style="position: absolute; top: 46%; left: 48%; width: 10px; height: 14px; border-radius: 60% 40% 60% 40%; background: #FFC21A; transform: rotate(10deg); opacity: 0.6"></div>
+    </div>
+
+    <div style="position: relative; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 24px">
+      <div style="display: flex; flex-direction: column; gap: 14px; max-width: 700px">
+        <p style="margin: 0; font-size: 14px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: #B8420F">Galería</p>
+        <h2 class="sec-title" style="margin: 0; font-family: 'Abril Fatface', serif; font-weight: 400; font-size: 70px; line-height: 1.02">Así se vive en México</h2>
+      </div>
+      <p style="margin: 0; max-width: 340px; font-family: 'Caveat', cursive; font-size: 28px; line-height: 1.2; color: #B8420F">Recuerdos colgados en el tendedero, como en la casa de la abuela.</p>
+    </div>
+
+    <!-- tendedero -->
+    <div style="position: relative; padding-top: 24px">
+      <svg aria-hidden="true" class="hide-sm" width="1280" height="90" viewBox="0 0 1280 90" preserveAspectRatio="none" style="position: absolute; top: 0; left: -80px; width: calc(100% + 160px); height: 90px">
+        <path d="M0 10 Q640 110 1280 10" stroke="#8E5A22" stroke-width="3" fill="none"></path>
+        <path d="M0 10 Q640 110 1280 10" stroke="#C98A3E" stroke-width="1" fill="none" stroke-dasharray="3 5"></path>
+      </svg>
+      <div style="position: relative; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 36px; align-items: start">
+        <sc-for list="{{fotos}}" as="ph" hint-placeholder-count="4">
+          <div class="hang" style="display: flex; flex-direction: column; align-items: center; padding-top: {{ph.drop}}px; animation-delay: {{ph.delay}}s">
+            <div aria-hidden="true" style="position: relative; z-index: 2; width: 16px; height: 40px; margin-bottom: -22px; background: #C98A3E; border: 2px solid #8E5A22; border-radius: 3px">
+              <div style="position: absolute; top: 14px; left: -4px; width: 20px; height: 5px; background: #8E5A22; border-radius: 2px"></div>
+            </div>
+            <figure class="polaroid" style="width: 100%; max-width: 290px; margin: 0; display: flex; flex-direction: column; gap: 10px; padding: 14px 14px 20px; background: #FFFFFF; box-shadow: 0 2px 0 rgba(42,15,20,0.06), 0 18px 36px rgba(42,15,20,0.2); transform: rotate({{ph.rot}}deg)">
+              <div style="position: relative; aspect-ratio: 1 / 1; max-width: 100%; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; background: {{ph.bg}}; background-image: repeating-linear-gradient(135deg, rgba(255,241,220,0.08) 0 14px, rgba(255,241,220,0) 14px 28px); color: #FFF1DC">
+                <div style="position: absolute; inset: 12px; border: 2px dashed rgba(255,241,220,0.55)"></div>
+                <svg width="46" height="46" viewBox="0 0 44 44" aria-hidden="true"><rect x="4" y="10" width="36" height="26" rx="5" fill="none" stroke="#FFF1DC" stroke-width="2.5"></rect><circle cx="22" cy="23" r="7" fill="none" stroke="#FFF1DC" stroke-width="2.5"></circle><rect x="15" y="5" width="14" height="6" rx="2" fill="#FFF1DC"></rect></svg>
+                <span style="font-size: 12px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase">Tu foto aquí</span>
+              </div>
+              <figcaption style="display: flex; flex-direction: column; gap: 2px; padding: 4px 4px 0">
+                <span style="font-family: 'Caveat', cursive; font-size: 28px; line-height: 1.05">{{ph.titulo}}</span>
+                <span style="font-size: 12px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: {{ph.tagColor}}">{{ph.lugar}}</span>
+              </figcaption>
+            </figure>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= IMPORTANCIA ================= -->
+  <section id="importancia" class="pad" style="position: relative; overflow: hidden; padding: 120px 80px 130px; background: #E4007C; color: #FFF1DC; display: flex; flex-direction: column; gap: 72px">
+    <!-- cita grande -->
+    <div style="position: relative; display: flex; flex-direction: column; align-items: center; gap: 20px; text-align: center">
+      <p style="margin: 0; padding: 8px 18px; background: #2A0F14; color: #FFC21A; font-size: 13px; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; border-radius: 999px">Por qué es importante para los mexicanos</p>
+      <div style="position: relative; max-width: 980px">
+        <span aria-hidden="true" style="position: absolute; top: -70px; left: -30px; font-family: 'Abril Fatface', serif; font-size: 220px; line-height: 1; color: #FFC21A; opacity: 0.9">“</span>
+        <h2 class="sec-title" style="position: relative; margin: 0; font-family: 'Abril Fatface', serif; font-weight: 400; font-size: 76px; line-height: 1.02">Nadie muere del todo mientras <span style="color: #FFC21A">alguien lo recuerde</span></h2>
+      </div>
+      <p style="margin: 0; font-family: 'Caveat', cursive; font-size: 28px; color: #FFE0EF">Tres razones, tres veladoras</p>
+    </div>
+
+    <!-- veladoras -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 40px; align-items: start">
+      <sc-for list="{{razones}}" as="r" hint-placeholder-count="3">
+        <article class="veladora" style="display: flex; flex-direction: column; align-items: center; gap: 22px; text-align: center">
+          <div style="position: relative; display: flex; flex-direction: column; align-items: center">
+            <div aria-hidden="true" class="glow" style="position: absolute; top: -10px; width: 180px; height: 180px; border-radius: 50%; background: #FFC21A; opacity: 0.35; filter: blur(40px)"></div>
+            <svg aria-hidden="true" width="44" height="64" viewBox="0 0 44 64" style="position: relative; margin-bottom: -6px">
+              <path class="flame" d="M22 2 C30 18 40 28 40 42 C40 54 32 62 22 62 C12 62 4 54 4 42 C4 28 14 18 22 2 Z" fill="#FFC21A"></path>
+              <path class="flame" d="M22 26 C26 34 30 38 30 46 C30 52 26 56 22 56 C18 56 14 52 14 46 C14 38 18 34 22 26 Z" fill="#FFF1DC" style="animation-delay: .2s"></path>
+            </svg>
+            <div style="position: relative; width: 190px; height: 290px; border: 4px solid #FFF1DC; border-radius: 18px 18px 26px 26px; background: rgba(255,241,220,0.16); overflow: hidden">
+              <div style="position: absolute; left: 0; right: 0; bottom: 0; height: 84%; background: {{r.wax}}"></div>
+              <div style="position: absolute; top: 10px; left: 14px; width: 10px; height: 250px; border-radius: 6px; background: rgba(255,255,255,0.35)"></div>
+              <div style="position: absolute; left: 18px; right: 18px; top: 74px; display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 18px 10px 16px; background: #FFF1DC; color: #2A0F14; border: 3px solid #2A0F14; border-radius: 10px">
+                <span style="font-size: 11px; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; color: #B8420F">Razón {{r.n}}</span>
+                <svg width="56" height="48" viewBox="0 0 56 48" aria-hidden="true">
+                  <path d="{{r.icon}}" fill="none" stroke="#2A0F14" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                  <circle cx="{{r.dotX}}" cy="{{r.dotY}}" r="5" fill="#E4007C"></circle>
+                </svg>
+                <h3 style="margin: 0; font-family: 'Abril Fatface', serif; font-weight: 400; font-size: 26px; line-height: 1">{{r.titulo}}</h3>
+              </div>
+            </div>
+          </div>
+          <p style="margin: 0; max-width: 320px; font-size: 17px; line-height: 1.6">{{r.texto}}</p>
+        </article>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- ================= LA CATRINA + calaveritas ================= -->
+  <section id="catrina" class="pad" style="padding: 120px 80px 0; display: flex; flex-direction: column; gap: 100px">
+    <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 72px">
+      <!-- carta de lotería -->
+      <div style="flex: 0 1 380px; display: flex; justify-content: center; padding: 20px">
+        <div style="position: relative; width: 300px; max-width: 100%">
+          <div aria-hidden="true" style="position: absolute; inset: 0; transform: rotate(8deg) translate(26px, 10px); border: 8px solid #2A0F14; border-radius: 14px; background: #0E9C9C; background-image: repeating-linear-gradient(45deg, rgba(255,241,220,0.22) 0 10px, rgba(255,241,220,0) 10px 20px)"></div>
+          <div class="loteria" style="position: relative; display: flex; flex-direction: column; gap: 10px; padding: 14px; background: #FFFFFF; border: 8px solid #2A0F14; border-radius: 14px; box-shadow: 0 22px 44px rgba(42,15,20,0.35); transform: rotate(-4deg)">
+            <div style="position: relative; aspect-ratio: 3 / 3.6; max-width: 100%; background: #FFC21A; border: 3px solid #2A0F14; overflow: hidden; display: flex; align-items: flex-end; justify-content: center">
+              <span style="position: absolute; z-index: 1; top: 8px; left: 8px; display: flex; align-items: center; justify-content: center; width: 46px; height: 46px; border: 3px solid #2A0F14; border-radius: 50%; background: #FFF1DC; font-family: 'Abril Fatface', serif; font-size: 28px; line-height: 1; color: #2A0F14">1</span>
+              <img src="fotos/4-icono-catrina-plumas.jpg" alt="Catrina con sombrero de plumas naranjas, flores y mariposas monarca, con un sagrado corazón de plata en el pecho" style="position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%">
+            </div>
+            <div style="padding: 6px 0 2px; border: 3px solid #2A0F14; text-align: center; font-family: 'Abril Fatface', serif; font-size: 30px; letter-spacing: 0.04em; color: #2A0F14">La Catrina</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- texto + cronología -->
+      <div style="flex: 999 1 460px; min-width: 0; display: flex; flex-direction: column; gap: 28px">
+        <div style="display: flex; flex-direction: column; gap: 14px">
+          <p style="margin: 0; font-size: 14px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: #2A0F14">Ícono</p>
+          <h2 class="sec-title" style="margin: 0; font-family: 'Abril Fatface', serif; font-weight: 400; font-size: 76px; line-height: 1">La Catrina</h2>
+          <p style="margin: 0; max-width: 600px; font-size: 19px; line-height: 1.6; color: #4A1A10">Empezó como una burla y terminó como el símbolo más reconocido del Día de Muertos.</p>
+        </div>
+        <ol style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0">
+          <sc-for list="{{catrinaHist}}" as="h" hint-placeholder-count="3">
+            <li style="display: flex; gap: 22px">
+              <div style="display: flex; flex-direction: column; align-items: center; flex: none">
+                <div style="width: 22px; height: 22px; border-radius: 50%; background: {{h.color}}; border: 4px solid #2A0F14"></div>
+                <div style="flex: 1; width: 4px; min-height: 30px; background: #2A0F14; opacity: {{h.line}}"></div>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 6px; padding-bottom: 28px">
+                <span style="font-family: 'Abril Fatface', serif; font-size: 30px; line-height: 1">{{h.anio}}</span>
+                <strong style="font-size: 18px">{{h.titulo}}</strong>
+                <p style="margin: 0; max-width: 560px; font-size: 16px; line-height: 1.6; color: #4A1A10">{{h.texto}}</p>
+              </div>
+            </li>
+          </sc-for>
+        </ol>
+      </div>
+    </div>
+
+    <!-- puesto de calaveritas -->
+    <div style="display: flex; flex-direction: column; margin: 0 -80px">
+      <svg aria-hidden="true" width="1440" height="80" style="display: block; width: 100%; height: 80px"><defs><pattern id="toldo" width="120" height="80" patternUnits="userSpaceOnUse"><rect x="0" y="0" width="60" height="50" fill="#E4007C"></rect><circle cx="30" cy="50" r="30" fill="#E4007C"></circle><rect x="60" y="0" width="60" height="50" fill="#FFF1DC"></rect><circle cx="90" cy="50" r="30" fill="#FFF1DC"></circle></pattern></defs><rect width="100%" height="80" fill="url(#toldo)"></rect></svg>
+      <div class="pad" style="display: flex; flex-direction: column; gap: 28px; padding: 40px 80px 0; background: #FFC21A">
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 12px">
+          <h3 style="margin: 0; font-family: 'Abril Fatface', serif; font-weight: 400; font-size: 44px">Calaveritas de azúcar</h3>
+          <p style="margin: 0; font-family: 'Caveat', cursive; font-size: 26px; color: #B8420F">Con tu nombre en la frente · pasa el cursor</p>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 24px; align-items: end">
+          <sc-for list="{{calaveritas}}" as="k" hint-placeholder-count="5">
+            <div style="display: flex; flex-direction: column; align-items: center">
+              <svg class="skull" width="140" height="140" viewBox="0 0 130 130" aria-hidden="true">
+                <ellipse cx="65" cy="58" rx="52" ry="50" fill="#FFFFFF"></ellipse>
+                <rect x="34" y="78" width="62" height="42" rx="18" fill="#FFFFFF"></rect>
+                <rect x="34" y="18" width="62" height="20" rx="10" fill="{{k.c2}}"></rect>
+                <text x="65" y="33" text-anchor="middle" font-family="Caveat, cursive" font-size="17" font-weight="600" fill="#FFFFFF">{{k.nombre}}</text>
+                <circle cx="45" cy="60" r="15" fill="{{k.c1}}"></circle>
+                <circle cx="85" cy="60" r="15" fill="{{k.c1}}"></circle>
+                <circle cx="45" cy="60" r="6" fill="{{k.c2}}"></circle>
+                <circle cx="85" cy="60" r="6" fill="{{k.c2}}"></circle>
+                <path d="M65 76 L59 88 Q65 92 71 88 Z" fill="{{k.c2}}"></path>
+                <path d="M42 104 Q65 114 88 104" stroke="{{k.c2}}" stroke-width="4" fill="none" stroke-dasharray="3 6" stroke-linecap="round"></path>
+                <circle cx="20" cy="72" r="5" fill="{{k.c1}}"></circle><circle cx="110" cy="72" r="5" fill="{{k.c1}}"></circle>
+              </svg>
+            </div>
+          </sc-for>
+        </div>
+        <div aria-hidden="true" style="height: 22px; margin: -6px -80px 0; background: #8E5A22; border-top: 6px solid #C98A3E; box-shadow: 0 10px 0 #5C3A16"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FOOTER con velas ================= -->
+  <footer style="background: #2A0F14; color: #FFF1DC">
+    <div aria-hidden="true" style="display: flex; justify-content: center; align-items: flex-end; gap: 28px; padding: 60px 20px 0; overflow: hidden">
+      <sc-for list="{{velas}}" as="v" hint-placeholder-count="9">
+        <svg width="34" height="{{v.h}}" viewBox="0 0 34 {{v.h}}" style="flex: none">
+          <ellipse class="flame" cx="17" cy="14" rx="8" ry="13" fill="#F5821F" style="animation-delay: {{v.d}}s"></ellipse>
+          <ellipse cx="17" cy="18" rx="3.5" ry="6" fill="#FFC21A"></ellipse>
+          <rect x="6" y="28" width="22" height="{{v.body}}" rx="3" fill="#FFF1DC"></rect>
+        </svg>
+      </sc-for>
+    </div>
+    <div class="pad" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; padding: 32px 80px; border-top: 6px solid #F5821F; font-size: 14px">
+      <span style="font-family: 'Abril Fatface', serif; font-size: 26px; color: #F5821F">Día de Muertos</span>
+      <span>Proyecto de Diseño de Interfaces · 2026</span>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":5900}}'>
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+this.state = { sel: null, seen: {}, musicOn: false, playing: false };
+}
+componentDidMount() {
+this.audio = new Audio('musica/la-llorona.mp3');
+this.audio.loop = true;
+this.audio.volume = 0.6;
+this.audio.addEventListener('play', () => this.setState({ playing: true }));
+this.audio.addEventListener('pause', () => this.setState({ playing: false }));
+}
+componentWillUnmount() {
+if (this.audio) this.audio.pause();
+}
+playMusic() {
+if (!this.audio) return;
+const p = this.audio.play();
+if (p && p.catch) p.catch(() => {});
+}
+renderVals() {
+const musicOn = !!this.state.musicOn;
+const playing = !!this.state.playing;
+const toggleMusic = () => {
+if (musicOn) {
+this.setState({ musicOn: false });
+if (this.audio) this.audio.pause();
+} else {
+this.setState({ musicOn: true });
+this.playMusic();
+}
+};
+const enterFiesta = () => { if (this.state.musicOn) this.playMusic(); };
+const leaveFiesta = () => { if (this.audio) this.audio.pause(); };
+const seen = this.state.seen || {};
+const sel = this.state.sel;
+const picado = [
+'papel-picado/papel-picado-rojo.png',
+'papel-picado/papel-picado-naranja.png',
+'papel-picado/papel-picado-amarillo.png',
+'papel-picado/papel-picado-verde.png',
+'papel-picado/papel-picado-azul.png',
+'papel-picado/papel-picado-rosa.png'
+];
+const flags = [];
+for (let i = 0; i < 14; i++) flags.push({ src: picado[i % picado.length], delay: -(i * 0.37).toFixed(2) });
+const petals = [];
+const pc = ['#FFC21A', '#B8420F', '#E4007C', '#FFF1DC'];
+for (let i = 0; i < 16; i++) {
+petals.push({ x: (i * 6.3 + 3) % 100, size: 10 + (i % 3) * 4, size2: 14 + (i % 4) * 3, color: pc[i % pc.length], dur: 9 + (i % 5) * 2, delay: -(i * 1.3) });
+}
+const garland = [];
+const gc = [['#F5821F', '#FFA53A', '#B8420F'], ['#FFC21A', '#FFD45E', '#E86A0A'], ['#E86A0A', '#F5921F', '#8F2F08']];
+const gs = [64, 52, 72, 58, 48, 68];
+for (let i = 0; i < 40; i++) {
+const c = gc[(i * 2) % 3];
+garland.push({ c1: c[0], c2: c[1], c3: c[2], size: gs[i % gs.length], rot: (i * 37) % 60, leaf: i % 4 === 1, d: (3 + (i % 4) * 0.6).toFixed(1), delay: -(i * 0.45).toFixed(2) });
+}
+const tiles = [];
+const tc = [['#0E9C9C', '#2A0F14'], ['#F5821F', '#0E9C9C'], ['#E4007C', '#F5821F']];
+for (let i = 0; i < 30; i++) tiles.push({ c1: tc[i % 3][0], c2: tc[i % 3][1] });
+const defs = [
+{ id: 'flor', nombre: 'Cempasúchil', x: 49, y: 23, texto: 'La "flor de veinte pétalos". Su color y su aroma guían a las almas hasta el altar.' },
+{ id: 'velas', nombre: 'Velas', x: 32, y: 26, texto: 'Su luz ilumina el camino de regreso a casa. Muchas familias ponen una por cada difunto.' },
+{ id: 'papel', nombre: 'Papel picado', x: 81, y: 15, texto: 'Representa el aire y la alegría de la fiesta. Se recorta a mano en papel de china.' },
+{ id: 'niveles', nombre: 'Niveles del altar', x: 50, y: 41, texto: 'Cada escalón tiene un sentido. En los altares de tres niveles representan el cielo, la tierra y el inframundo.' },
+{ id: 'pan', nombre: 'Pan de muerto', x: 41, y: 50, texto: 'Las tiras de encima representan los huesos y la bolita del centro, el cráneo.' },
+{ id: 'barro', nombre: 'Ollas de barro', x: 26, y: 63, texto: 'El barro es un material tradicional de México. Aquí sirve de florero para el cempasúchil.' },
+{ id: 'calavera', nombre: 'Calaveritas de azúcar', x: 68, y: 66, texto: 'Recuerdan que la muerte es parte de la vida. A veces llevan escrito el nombre de alguien en la frente.' },
+{ id: 'camino', nombre: 'Camino de pétalos', x: 50, y: 92, texto: 'Pétalos de cempasúchil en el piso que marcan la ruta de la entrada hasta el altar.' }
+];
+let count = 0;
+let current = null;
+const items = defs.map((d, i) => {
+const was = !!seen[d.id];
+if (was) count++;
+const isSel = sel === d.id;
+if (isSel) current = { ...d, n: i + 1 };
+return {
+n: i + 1,
+nombre: d.nombre,
+x: d.x,
+y: d.y,
+sel: isSel,
+on: isSel ? 'true' : 'false',
+cls: isSel ? 'hotspot pulse' : 'hotspot',
+dot: isSel ? '#FFC21A' : (was ? '#FFF1DC' : '#F5821F'),
+bg: isSel ? '#FFC21A' : '#8F2F08',
+fg: isSel ? '#2A0F14' : '#FFF1DC',
+border: isSel ? '#FFC21A' : (was ? '#FFF1DC' : '#D9672A'),
+pick: () => this.setState({ sel: d.id, seen: { ...(this.state.seen || {}), [d.id]: true } })
+};
+});
+const infoTag = current ? 'Elemento ' + current.n + ' de 8' : 'Elige un número';
+const infoTitle = current ? current.nombre : 'Explora la ofrenda';
+const infoText = current ? current.texto : 'Esta ofrenda tiene ocho elementos marcados. Cada uno tiene un significado para recibir a quienes vienen de visita.';
+let msg = 'Empieza por el número 1.';
+if (count > 0 && count < 8) msg = 'Llevas ' + count + ', te faltan ' + (8 - count) + '.';
+if (count === 8) msg = '¡Descubriste toda la ofrenda!';
+const comida = [
+{ nombre: 'Pan de muerto', bg: '#FFC21A', fg: '#2A0F14' },
+{ nombre: 'Mole', bg: '#2A0F14', fg: '#FFF1DC' },
+{ nombre: 'Tamales', bg: '#FFF1DC', fg: '#2A0F14' },
+{ nombre: 'Calabaza en tacha', bg: '#F5821F', fg: '#2A0F14' },
+{ nombre: 'Chocolate caliente', bg: '#E4007C', fg: '#FFF1DC' }
+];
+const fotos = [
+{ titulo: 'Ofrenda familiar', lugar: 'En casa', bg: '#B8420F', tagColor: '#B8420F', rot: -4, drop: 0, delay: 0 },
+{ titulo: 'Noche en Janitzio', lugar: 'Michoacán', bg: '#0B5E5E', tagColor: '#0B7A7A', rot: 3, drop: 44, delay: -1.1 },
+{ titulo: 'Desfile de Catrinas', lugar: 'Ciudad de México', bg: '#E4007C', tagColor: '#C20069', rot: -2.5, drop: 44, delay: -2.3 },
+{ titulo: 'Campos de cempasúchil', lugar: 'Puebla', bg: '#F5821F', tagColor: '#B8420F', rot: 4, drop: 0, delay: -0.6 }
+];
+const calaveritas = [
+{ nombre: 'Diana', c1: '#E4007C', c2: '#0E9C9C' },
+{ nombre: 'Abuela', c1: '#F5821F', c2: '#2A0F14' },
+{ nombre: 'Pepe', c1: '#0E9C9C', c2: '#E4007C' },
+{ nombre: 'Lupita', c1: '#FFC21A', c2: '#B8420F' },
+{ nombre: 'Tú', c1: '#B8420F', c2: '#0E9C9C' }
+];
+const razones = [
+{ n: 1, titulo: 'Memoria', wax: '#FFC21A', icon: 'M8 6 H48 V42 H8 Z M14 36 L24 24 L32 32 L38 26 L46 36', dotX: 40, dotY: 15, texto: 'Poner la foto, la comida y la bebida favorita de alguien mantiene viva su historia. Se cuentan anécdotas y se aprende de quienes ya no están.' },
+{ n: 2, titulo: 'Familia', wax: '#F5821F', icon: 'M10 44 C10 32 22 32 22 44 M34 44 C34 32 46 32 46 44 M21 44 C21 30 35 30 35 44 M16 22 A6 6 0 1 0 16.1 22 M40 22 A6 6 0 1 0 40.1 22', dotX: 28, dotY: 14, texto: 'Armar el altar, cocinar y visitar el panteón se hace juntos. Abuelos, padres e hijos comparten la tradición y la pasan a la siguiente generación.' },
+{ n: 3, titulo: 'Identidad', wax: '#0E9C9C', icon: 'M28 4 C14 4 8 13 8 22 C8 29 12 33 16 35 V44 H40 V35 C44 33 48 29 48 22 C48 13 42 4 28 4 Z M22 44 V38 M28 44 V38 M34 44 V38', dotX: 28, dotY: 20, texto: 'Mirar la muerte con humor y cariño, con calaveritas literarias y catrinas, es una forma muy mexicana de entender la vida.' }
+];
+const catrinaHist = [
+{ anio: 'Hacia 1912', titulo: 'Nace como "La Calavera Garbancera"', color: '#F5821F', line: 1, texto: 'El grabador José Guadalupe Posada la dibujó para burlarse de quienes se vestían a la europea y negaban sus raíces.' },
+{ anio: '1947', titulo: 'Diego Rivera la bautiza', color: '#E4007C', line: 1, texto: 'En su mural Sueño de una tarde dominical en la Alameda Central la pintó con vestido elegante y sombrero de plumas, y la llamó Catrina.' },
+{ anio: 'Hoy', titulo: 'Símbolo de todo un país', color: '#0E9C9C', line: 0, texto: 'Miles de personas se maquillan de Catrina para desfiles, concursos y fiestas en todo México.' }
+];
+const heights = [70, 96, 120, 84, 140, 84, 120, 96, 70];
+const velas = heights.map((h, i) => ({ h: h + 28, body: h, d: (i * 0.23).toFixed(2) }));
+return {
+flags, petals, garland, tiles, items, count, infoTag, infoTitle, infoText,
+toggleMusic, enterFiesta, leaveFiesta, playing,
+musicOn: musicOn ? 'true' : 'false',
+musicBg: musicOn ? '#FFC21A' : '#FFF1DC',
+musicLabel: musicOn ? 'Apagar música' : 'Activar música',
+musicHint: !musicOn ? 'Actívala y suena cada vez que pases por aquí.' : (playing ? 'Sonando… sal de la sección para pausar.' : 'Pasa el cursor por esta sección para escucharla.'),
+msg, msgColor: count === 8 ? '#FFC21A' : '#FFE0C2',
+comida, fotos, calaveritas, velas, razones, catrinaHist
+};
+}
+}
+</script>
+</body>
+</html>

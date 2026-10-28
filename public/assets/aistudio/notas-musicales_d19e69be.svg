@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="110" height="44" viewBox="0 0 110 44">
+<g id="nota-doble"><path d="M10 34 V8 L26 4 V28" stroke="#FFC21A" stroke-width="3" fill="none"/><ellipse cx="7" cy="34" rx="6" ry="5" fill="#FFC21A"/><ellipse cx="23" cy="29" rx="6" ry="5" fill="#FFC21A"/></g>
+<g id="nota-rosa"><path d="M52 34 V8 Q60 12 60 20" stroke="#FF5AAE" stroke-width="3" fill="none"/><ellipse cx="48" cy="34" rx="7" ry="5" fill="#FF5AAE"/></g>
+<g id="nota-naranja"><path d="M92 34 V8 Q100 12 100 20" stroke="#F5821F" stroke-width="3" fill="none"/><ellipse cx="88" cy="34" rx="7" ry="5" fill="#F5821F"/></g>
+</svg>
